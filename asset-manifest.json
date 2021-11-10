@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/real-time-chat/static/css/main.13e5f1ca.chunk.css",
-    "main.js": "/real-time-chat/static/js/main.c8e18efc.chunk.js",
-    "main.js.map": "/real-time-chat/static/js/main.c8e18efc.chunk.js.map",
+    "main.css": "/real-time-chat/static/css/main.99195a97.chunk.css",
+    "main.js": "/real-time-chat/static/js/main.aeeef53b.chunk.js",
+    "main.js.map": "/real-time-chat/static/js/main.aeeef53b.chunk.js.map",
     "runtime-main.js": "/real-time-chat/static/js/runtime-main.f70ab998.js",
     "runtime-main.js.map": "/real-time-chat/static/js/runtime-main.f70ab998.js.map",
     "static/js/2.09701403.chunk.js": "/real-time-chat/static/js/2.09701403.chunk.js",
     "static/js/2.09701403.chunk.js.map": "/real-time-chat/static/js/2.09701403.chunk.js.map",
     "index.html": "/real-time-chat/index.html",
-    "static/css/main.13e5f1ca.chunk.css.map": "/real-time-chat/static/css/main.13e5f1ca.chunk.css.map",
+    "static/css/main.99195a97.chunk.css.map": "/real-time-chat/static/css/main.99195a97.chunk.css.map",
     "static/js/2.09701403.chunk.js.LICENSE.txt": "/real-time-chat/static/js/2.09701403.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f70ab998.js",
     "static/js/2.09701403.chunk.js",
-    "static/css/main.13e5f1ca.chunk.css",
-    "static/js/main.c8e18efc.chunk.js"
+    "static/css/main.99195a97.chunk.css",
+    "static/js/main.aeeef53b.chunk.js"
   ]
 }
