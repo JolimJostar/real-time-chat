@@ -18,16 +18,6 @@ const Chat = () => {
         return (`${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`)
     }
 
-    function countInArray(array, what) {
-        var count = 0;
-        for (var i = 0; i < array.length; i++) {
-            if (array[i] === what) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     function connect(e) {
 
         e.preventDefault()
