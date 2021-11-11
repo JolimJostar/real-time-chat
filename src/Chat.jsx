@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect} from 'react';
+import React, { useRef, useState} from 'react';
+import logo from './Img/Rectangle 1.png'
 
 const Chat = () => {
     const [messages, setMessages] = useState([])
+    const [users, setUsers] = useState([])
     const [value, setValue] = useState('')
     const socket = useRef()
     const [connected, setConnected] = useState(false)
@@ -16,6 +18,16 @@ const Chat = () => {
         return (`${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`)
     }
 
+    function countInArray(array, what) {
+        var count = 0;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === what) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     function connect(e) {
 
         e.preventDefault()
@@ -25,11 +37,9 @@ const Chat = () => {
         socket.current.onopen = () => {
             setConnected(true)
             socket.current.send(JSON.stringify({
-                text: `${id} connected!`,
                 userId: id,
                 yans: true,
                 event: 'open',
-                date: getDate(),
                 messageId: Date.now(),
             }))
         }
@@ -45,7 +55,24 @@ const Chat = () => {
             try {
                 if (JSON.parse(event.data).yans) {
                     const message = JSON.parse(event.data)
-                    setMessages(prev => [message, ...prev])
+                    switch (message.event) {
+                        case 'message':
+                            setMessages(prev => [message, ...prev])
+                            break;
+                        case 'open':
+                            socket.current.send(JSON.stringify({
+                                userId: id,
+                                yans: true,
+                                event: 'openResponse',
+                            }))
+                            setUsers(prev => [message.userId, ...prev])
+                            break
+                        case 'openResponse':
+                            setUsers(prev => [message.userId, ...prev])
+                            break
+                        default:
+                            break;
+                    }
                      
                 }
             } catch (error) {
@@ -75,7 +102,7 @@ const Chat = () => {
         return(
             <div className="w-full h-screen flex justify-center items-center flex-col">
                 <h1 className="text-lg my-4">Введи имя</h1>
-                <form onSubmit={(id !== '') ? e => connect(e) : e => e.preventDefault()} className="flex flex-row">
+                <form onSubmit={(id !== '') ? e => connect(e, users) : e => e.preventDefault()} className="flex flex-row">
                     <input className="rounded border border-green-500" value={id} onChange={e => setId(e.target.value)} type="text" placeholder="Введи имя"/>
                     <button className="rounded border mx-4" type='submit'>Вход</button>
                 </form>
@@ -86,24 +113,30 @@ const Chat = () => {
 
     return (
         <div>
-            <div className="w-full h-[75px] bg-red">
-
+            <div className="w-full h-[75px] bg-[#0F0F0F] flex flex-row">
+                    {users.map( user =>  
+                        <div className="text-white flex flex-row items-center mr-4" key={Date.now()}>
+                            <img src={logo} alt="" className="mr-[18px] h-[45px] w-[45px] rounded-full bg-contain"/>
+                            <p className="font-semibold text-[26px] text-[#D9D9D9]">{user}</p>
+                        </div>) 
+                    }
             </div>
-            <div className="messages overflow-y-auto flex flex-col-reverse flex-grow">
+            <div className="messages overflow-y-auto flex flex-col-reverse flex-grow bg-[#1A1A1A] px-[30px] pt-[35px]">
                 <div className="flex flex-auto"></div>
                 {messages.map(mess =>
-                    <div key={mess.messageId} className={(mess.id===id) ? "flex justify-end" : ""}>
-                        {mess.event === 'open'
-                            ?   <div className="connection_message">
-                                    Пользователь {mess.userId} подключился
+                    <div key={mess.messageId} className={(mess.id===id) ? "flex justify-end pt-[9px]" : "flex justify-start pt-[9px]"}>
+                        <div className="flex flex-row">
+                            {(mess.id!==id) 
+                            ?   <div className="items-end flex mr-[17px]">
+                                    <img src={logo} className="w-[60px] h-[60px]" alt="" />
                                 </div>
-                            :   <div className={(mess.id===id) ? "border px-4 py-2 bg-green-500 text-white max-w-[470px] rounded-[9px] break-words" : 'border px-4 py-2 bg-gray-500 text-white max-w-[470px] rounded-[9px] break-words'}>
-                                    {mess.id}. {mess.text}
-                                    <p>
-                                        {mess.time}
-                                    </p>
-                                </div>
-                        }
+                            :   undefined}
+                            <div className={(mess.id===id) ? "border px-[16px]  pt-[10px] pb-[5px] bg-[#14ff72] bg-opacity-70 text-white max-w-[470px] rounded-[9px] break-words flex flex-col" : 'border px-[16px] pt-[10px] pb-[5px] bg-[#464646] text-white max-w-[470px] rounded-[9px] break-words flex flex-col'}>
+                                <p className={mess.id === id ? "hidden" : "text-[20px] font-bold text-[#ECECEC]"}>{mess.id}</p>
+                                <p className="text-[19px]">{mess.text}</p>
+                                <p className="text-right">{mess.time}</p>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

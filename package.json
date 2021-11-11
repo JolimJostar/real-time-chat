@@ -1,5 +1,6 @@
 {
   "name": "hhfinal",
+  "homepage": "https://jolimjostar.github.io/real-time-chat/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
