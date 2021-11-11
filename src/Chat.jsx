@@ -105,7 +105,7 @@ const Chat = () => {
         <div>
             <div className="w-full h-[75px] bg-[#0F0F0F] flex flex-row">
                     {users.map( user =>  
-                        <div className="text-white flex flex-row items-center mr-4" key={Date.now()}>
+                        <div className="text-white flex flex-row items-center mr-4" key={Math.random()}>
                             <img src={logo} alt="" className="mr-[18px] h-[45px] w-[45px] rounded-full bg-contain"/>
                             <p className="font-semibold text-[26px] text-[#D9D9D9]">{user}</p>
                         </div>) 
